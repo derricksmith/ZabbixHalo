@@ -57,7 +57,7 @@ ZabbixHalo is a media type for the Zabbix monitoring system that manages HALOITS
 
 ## Usage
 
-See [Wiki](https://github.com/derricksmith/pZabbixHalo/wiki)
+See [Wiki](https://github.com/derricksmith/ZabbixHalo/wiki)
 
 <p  align="right">(<a  href="#readme-top">back to top</a>)</p>
 
