@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.2</version>
+    <date>2022-11-24T02:03:30Z</date>
+    <media_types>
+        <media_type>
+            <name>HaloITSM</name>
+            <type>WEBHOOK</type>
+            <parameters>
+                <parameter>
+                    <name>duration</name>
+                    <value>{EVENT.DURATION}</value>
+                </parameter>
+                <parameter>
+                    <name>eventId</name>
+                    <value>{EVENT.ID}</value>
+                </parameter>
+                <parameter>
+                    <name>graphHeight</name>
+                    <value>120</value>
+                </parameter>
+                <parameter>
+                    <name>graphMatch</name>
+                    <value>exact</value>
+                </parameter>
+                <parameter>
+                    <name>graphWidth</name>
+                    <value>300</value>
+                </parameter>
+                <parameter>
+                    <name>haloClientId</name>
+                    <value>cc892990-be16-4b28-8a1b-f0566128f1ac</value>
+                </parameter>
+                <parameter>
+                    <name>haloClientSecret</name>
+                    <value>92bf2655-95e8-4828-a3b9-25302215ca8e-a736b006-f3b1-4b6b-a351-bae20d2d6d5a</value>
+                </parameter>
+                <parameter>
+                    <name>haloCustomFieldId</name>
+                    <value>185</value>
+                </parameter>
+                <parameter>
+                    <name>haloCustomFieldName</name>
+                    <value>CFZabbixID</value>
+                </parameter>
+                <parameter>
+                    <name>haloGrantType</name>
+                    <value>client_credentials</value>
+                </parameter>
+                <parameter>
+                    <name>haloHost</name>
+                    <value>https://sbhic.haloitsm.com</value>
+                </parameter>
+                <parameter>
+                    <name>haloScope</name>
+                    <value>all</value>
+                </parameter>
+                <parameter>
+                    <name>haloTicketCategory1</name>
+                    <value>Hardware&gt;Monitor</value>
+                </parameter>
+                <parameter>
+                    <name>haloTicketClientId</name>
+                </parameter>
+                <parameter>
+                    <name>haloTicketPriorityId</name>
+                </parameter>
+                <parameter>
+                    <name>haloTicketTeam</name>
+                    <value>IT Infrastructure</value>
+                </parameter>
+                <parameter>
+                    <name>haloTicketTypeId</name>
+                </parameter>
+                <parameter>
+                    <name>haloTicketUsername</name>
+                    <value>Sysadmin</value>
+                </parameter>
+                <parameter>
+                    <name>HttpProxy</name>
+                </parameter>
+                <parameter>
+                    <name>itemId</name>
+                    <value>{ITEM.ID}</value>
+                </parameter>
+                <parameter>
+                    <name>loggingLevel</name>
+                    <value>3</value>
+                </parameter>
+                <parameter>
+                    <name>period</name>
+                    <value>10m,4h,1d,7d</value>
+                </parameter>
+                <parameter>
+                    <name>periodHeader</name>
+                    <value>Last 10 minutes,Last 4 hours,Last day,Last 7 days</value>
+                </parameter>
+                <parameter>
+                    <name>showLegend</name>
+                    <value>0</value>
+                </parameter>
+                <parameter>
+                    <name>summary</name>
+                    <value>{{ HOST_NAME|raw }}:  ({{ EVENT_SEVERITY }}) {{ EVENT_NAME|raw }}</value>
+                </parameter>
+                <parameter>
+                    <name>verifyPeer</name>
+                    <value>1</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixApiPassword</name>
+                    <value>D0lph!n2015</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixApiUser</name>
+                    <value>saldapauth</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixPassword</name>
+                    <value>D0lph!n2015</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixUrlBase</name>
+                    <value>https://azure-zabbix.sbhic.com/zabbix</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixUrlMedia</name>
+                    <value>https://azure-zabbix.sbhic.com/zabbixHalo/zabbixHalo.php</value>
+                </parameter>
+                <parameter>
+                    <name>zabbixUser</name>
+                    <value>saldapauth</value>
+                </parameter>
+            </parameters>
+            <script>try {
+    // Pickup parameters
+    params = JSON.parse(value),
+    req = new HttpRequest(),
+    fields = {},
+    resp = '',
+    result = { 
+		tags: {
+			'endpoint' : 'HaloITSM'
+		} 
+	};
+
+    // Set HTTP proxy if required
+    if (typeof params.httpProxy === 'string' &amp;&amp; params.httpProxy.trim() !== '') {
+        req.setProxy(params.httpProxy);
+        fields.httpProxy = params.httpProxy;
+    }
+
+    // Declare output type
+    req.addHeader('Content-Type: application/json');
+
+    // Must have fields
+    fields.itemId = params.itemId;
+    fields.eventId = params.eventId;
+    fields.zabbixUrlBase = params.zabbixUrlBase;
+	fields.zabbixUrlMedia = params.zabbixUrlMedia;
+    fields.duration = params.duration;
+	
+	if (fields.itemId == '') throw 'ZabbixHalo missing itemId';
+	if (fields.eventId == '') throw 'ZabbixHalo missing eventId';
+	if (fields.zabbixUrlBase == '') throw 'ZabbixHalo missing zabbixUrlBase';
+	if (fields.zabbixUrlMedia == '') throw 'ZabbixHalo missing zabbixUrlMedia';
+	if (fields.duration == '') throw 'ZabbixHalo missing duration';
+	
+    // Optional fields
+	if (typeof params.haloClientId === 'string') { fields.haloClientId = params.haloClientId; }
+	if (typeof params.haloClientSecret === 'string') { fields.haloClientSecret = params.haloClientSecret; }
+	if (typeof params.haloGrantType === 'string') { fields.haloGrantType = params.haloGrantType; }
+	if (typeof params.haloScope === 'string') { fields.haloScope = params.haloScope; }
+	if (typeof params.haloHost === 'string') { fields.haloHost = params.haloHost; }
+	if (typeof params.haloCustomFieldId === 'string') { fields.haloCustomFieldId = params.haloCustomFieldId; }
+	if (typeof params.haloCustomFieldName === 'string') { fields.haloCustomFieldName = params.haloCustomFieldName; }
+	if (typeof params.haloTicketTypeId === 'string') { fields.haloTicketTypeId = params.haloTicketTypeId; }
+	if (typeof params.haloTicketPriorityId === 'string') { fields.haloTicketPriorityId = params.haloTicketPriorityId; }
+	if (typeof params.haloTicketClientId === 'string') { fields.haloTicketClientId = params.haloTicketClientId; }
+	if (typeof params.haloTicketTeam === 'string') { fields.haloTicketTeam = params.haloTicketTeam; }
+	if (typeof params.haloTicketCategory1 === 'string') { fields.haloTicketCategory1 = params.haloTicketCategory1; }
+	if (typeof params.haloTicketUsername === 'string') { fields.haloTicketUsername = params.haloTicketUsername; }
+	if (typeof params.zabbixUser === 'string') { fields.zabbixUser = params.zabbixUser; }
+	if (typeof params.zabbixPassword === 'string') { fields.zabbixPassword = params.zabbixPassword; }
+	if (typeof params.zabbixApiUser === 'string') { fields.zabbixApiUser = params.zabbixApiUser; }
+	if (typeof params.zabbixApiPassword === 'string') { fields.zabbixApiPassword = params.zabbixApiPassword; }
+	if (typeof params.verifyPeer === 'string') { fields.verifyPeer = params.verifyPeer; }
+	if (typeof params.haloTicketUsername === 'string') { fields.haloTicketUsername = params.haloTicketUsername; }
+	if (typeof params.loggingLevel === 'string') { fields.loggingLevel = params.loggingLevel; }
+	if (typeof params.graphMatch === 'string') { fields.graphMatch = params.graphMatch; }
+    if (typeof params.graphWidth === 'string') { fields.graphWidth = params.graphWidth; }
+    if (typeof params.graphHeight === 'string') { fields.graphHeight = params.graphHeight; }
+    if (typeof params.summary === 'string') { fields.summary = params.summary; }
+    if (typeof params.showLegend === 'string') { fields.showLegend = params.showLegend; }
+    if (typeof params.period === 'string') { fields.period = params.period; }
+    if (typeof params.periodHeader === 'string') { fields.periodHeader = params.periodHeader; }
+
+    // Post information to the processing script
+    Zabbix.Log(4, '[ZabbixHalo Webhook] Sending request: ' + fields.zabbixUrlMedia + '?' + JSON.stringify(fields));
+    var resp = req.post(fields.zabbixUrlMedia,JSON.stringify(fields));
+    Zabbix.Log(4, '[ZabbixHalo Webhook] Receiving response:' + resp);
+
+    // If there was an error, report it
+    if (req.getStatus() != 200) { 
+		throw resp; 
+	}
+	
+	if (req.getStatus() == 200){
+		if (typeof resp.errors === 'object' &amp;&amp; Object.keys(resp.errors).length &gt; 0) {
+			throw resp;
+		}
+    }
+
+    //resp = JSON.parse(resp);
+	//result.tags.status = resp.status;
+    
+}
+catch (error)
+{
+    // In case something went wrong in the processing, pass the error back to Zabbix
+	
+	Zabbix.Log(127, 'ZabbixHalo notification failed : '+error);
+	Zabbix.Log(127, 'Response : '+resp);
+    Zabbix.Log(127, 'Json: '+JSON.stringify(fields));
+    throw 'ZabbixHalo notification failed : '+error;
+}
+
+
+// Pass the result back to Zabbix
+return JSON.stringify(result);</script>
+            <process_tags>YES</process_tags>
+            <description>The &quot;zabbixUrlMedia&quot; must point to the location of the processing script. If a proxy is required, define &quot;HttpProxy&quot; for the proxy address.
+
+Customization:
+- &quot;graphWidth&quot; and &quot;graphWidth&quot; can be defined for the image size
+- &quot;showLegend&quot; can be defined to show or hide the legend of the graph
+- &quot;subject&quot; can be defined for a customized subject for the mail message
+- &quot;periods&quot; and &quot;periods_headers&quot; can be defined for displaying multiple periods of the same graph, or
+- &quot;period&quot; and &quot;period_header&quot; can be defined to display a single graph
+
+The html.template and plain.template files can be adjusted (TWIG format).
+
+More details are available at https://github.com/derricksmith/zabbixHalo</description>
+            <message_templates>
+                <message_template>
+                    <event_source>TRIGGERS</event_source>
+                    <operation_mode>PROBLEM</operation_mode>
+                    <subject>Problem: {EVENT.NAME}</subject>
+                    <message>Problem started at {EVENT.TIME} on {EVENT.DATE}
+Problem name: {EVENT.NAME}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Operational data: {EVENT.OPDATA}
+Original problem ID: {EVENT.ID}
+{TRIGGER.URL}
+
+eventId: {EVENT.ID}
+TriggerId: {TRIGGER.ID}
+itemId: {ITEM.ID]</message>
+                </message_template>
+                <message_template>
+                    <event_source>TRIGGERS</event_source>
+                    <operation_mode>RECOVERY</operation_mode>
+                    <subject>Resolved in {EVENT.DURATION}: {EVENT.NAME}</subject>
+                    <message>Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+Problem name: {EVENT.NAME}
+Problem duration: {EVENT.DURATION}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Original problem ID: {EVENT.ID}
+{TRIGGER.URL}
+
+eventId: {EVENT.ID}
+TriggerId: {TRIGGER.ID}
+itemId: {ITEM.ID]</message>
+                </message_template>
+                <message_template>
+                    <event_source>TRIGGERS</event_source>
+                    <operation_mode>UPDATE</operation_mode>
+                    <subject>Updated problem in {EVENT.AGE}: {EVENT.NAME}</subject>
+                    <message>{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+{EVENT.UPDATE.MESSAGE}
+
+Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+
+eventId: {EVENT.ID}
+TriggerId: {TRIGGER.ID}
+itemId: {ITEM.ID]</message>
+                </message_template>
+            </message_templates>
+        </media_type>
+    </media_types>
+</zabbix_export>
