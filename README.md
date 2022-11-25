@@ -156,16 +156,17 @@ Project Link: [https://github.com/derricksmith/ZabbixHalo](https://github.com/de
   
   
 
-<!-- ACKNOWLEDGMENTS
+<!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
 
-* [Jordi Moraleda - PHP Rest Curl](https://github.com/jmoraleda/php-rest-curl)
+* [Wolfgang Alper - Zabbix PHP API Client](https://github.com/intellitrend/zabbixapi-php)
+* [Derrick Smith - HaloITSM API Client](https://github.com/derricksmith/HaloApi)
   
 
 <p  align="right">(<a  href="#readme-top">back to top</a>)</p> 
 
--->
+
 
   
   
