@@ -162,6 +162,7 @@ Project Link: [https://github.com/derricksmith/ZabbixHalo](https://github.com/de
 
 * [Wolfgang Alper - Zabbix PHP API Client](https://github.com/intellitrend/zabbixapi-php)
 * [Derrick Smith - HaloITSM API Client](https://github.com/derricksmith/HaloApi)
+* [moudsen - mailGraph](https://github.com/moudsen/mailGraph)
   
 
 <p  align="right">(<a  href="#readme-top">back to top</a>)</p> 
